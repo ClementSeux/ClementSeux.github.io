@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="Le meilleur jeu de dés à 2 joueurs en local sur navigateur">
+	<!-- Our CSS -->
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<title>Ze Dice Game</title>
+</head>
+<body class=""> 
+	<script> </script> 
+
+		<!--dice display-->
+		<div class="central_overlay">
+			<div class="col p-0 vertical_menu h-100 w-100">
+				<div class="mx-auto my-auto">
+					<img src="img/6.PNG" class="shadow dice">
+				</div>
+			</div>
+		</div>
+
+		<!--central menu-->
+		<div  class="text-responsive-3 central_overlay">
+			<div class="col p-0 vertical_menu h-100 w-100">
+				<p id="new_game_btn" class="text-center my-auto mt-md-3 mt-2 align-middle"> 
+					<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="red" class="bi bi-plus-circle align-middle" viewBox="0 0 16 16">
+						<path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+						<path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+					</svg> 
+					<span class="align-middle ">NEW GAME</span>
+				</p>		
+				<div id="roll_and_hold" class="row mt-auto pt-4 mb-2">
+					<div class="col-6 col-md-12">
+						<p id="roll_btn" class="text-center  mb-4">
+							<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="red" class="bi bi-arrow-repeat align-middle" viewBox="0 0 16 16">
+								<path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z"/>
+								<path fill-rule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z"/>
+								</svg>
+							<span class="align-middle">ROLL DICE</span>
+						</p>
+					</div>
+					<div class="col-6 col-md-12">
+						<p id="hold_btn" class="text-center">
+							<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="red" class="bi bi-box-arrow-down align-middle" viewBox="0 0 16 16">
+								<path fill-rule="evenodd" d="M3.5 10a.5.5 0 0 1-.5-.5v-8a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 0 0 1h2A1.5 1.5 0 0 0 14 9.5v-8A1.5 1.5 0 0 0 12.5 0h-9A1.5 1.5 0 0 0 2 1.5v8A1.5 1.5 0 0 0 3.5 11h2a.5.5 0 0 0 0-1h-2z"/>
+								<path fill-rule="evenodd" d="M7.646 15.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 14.293V5.5a.5.5 0 0 0-1 0v8.793l-2.146-2.147a.5.5 0 0 0-.708.708l3 3z"/>
+								</svg>
+							<span class="align-middle">HOLD</span>
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		
+
+		<!--PLAYER 1 side-->
+		<div class="row h-100">
+		  <div class="p1_side active_side col-12 col-md-6 p-0">
+				<div class="vertical_menu">
+					<p id='player1' class="text-center mt-md-4 mt-3 mb-4 mb-md-1 text-responsive-2 current_player" >PLAYER 1</p>
+					<p class="text-center mt-0 mb-auto text-responsive-1 text-danger" id="p1_global_score">0</p>
+					<div class="mx-auto mt-auto mb-3 mb-md-2 current_score_box">
+						<p class="text-center pt-0 pb-1 m-0 text-responsive-6">CURRENT</p>
+						<p class="text-center py-0 m-0 text-responsive-5" id="p1_current_score">0</p>
+					</div>
+				</div>
+		  </div>
+
+		  <!--PLAYER 2 side-->
+		  <div class="p2_side col-12 col-md-6 p-0">
+				<div class="vertical_menu">
+					<p id='player2' class="text-center mt-md-4 mt-3 mb-1 text-responsive-2" >PLAYER 2</p>
+					<p class="text-center mt-0 mb-auto text-responsive-1 text-danger" id="p2_global_score">0</p>
+					<div class="mx-auto mt-auto mb-3 mb-md-2 current_score_box">
+						<p class="text-center pt-0 pb-1 m-0 text-responsive-6">CURRENT</p>
+						<p class="text-center py-0 m-0 text-responsive-5" id="p2_current_score">0</p>
+					</div>
+				</div>
+		  </div>
+		</div>
+
+	<!-- JQuery -->
+	<script src="js/jquery.min.js"></script>
+	<!-- Bootstrap JS -->
+	<script type="text/javascript" src="node_modules\bootstrap\dist\js\bootstrap.bundle.min.js"></script>
+	<!-- Our script JS -->
+	<script src="js/script.js"></script>
+</body>
+</html>
