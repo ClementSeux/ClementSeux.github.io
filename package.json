@@ -1,0 +1,8 @@
+{
+  "devDependencies": {
+    "bootstrap": "^5.1.3"
+  },
+  "dependencies": {
+    "sass-trigonometry": "0.0.2"
+  }
+}
