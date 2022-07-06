@@ -11227,9 +11227,6 @@ a:not(.nav-link):hover, a:not(.nav-link):active {
 .nav-link {
   cursor: url("../img/cursor4.svg"), auto !important;
   display: inline-block;
-  margin: 50px;
-  padding: 25px 10px 25px 10px;
-  height: 3em;
   position: relative;
   color: #FFF;
   /* unvisited/visited link */
@@ -11295,6 +11292,11 @@ a:not(.nav-link):hover, a:not(.nav-link):active {
   background: none;
 }
 
+@media (max-width: 768px) {
+  .nav-link {
+    font-size: smaller;
+  }
+}
 h1, .h1 {
   font-family: "Bebas Neue", cursive;
   transform: rotate(-12deg);
