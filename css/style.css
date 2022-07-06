@@ -11122,7 +11122,7 @@ textarea.form-control-lg {
   }
 }
 .text-responsive-1 {
-  font-size: calc(350% + 0.7vw + 0.3vh);
+  font-size: calc(300% + 0.7vw + 0.3vh);
 }
 
 .text-responsive-2 {
