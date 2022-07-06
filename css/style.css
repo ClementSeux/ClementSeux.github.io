@@ -11299,16 +11299,6 @@ a:not(.nav-link):hover, a:not(.nav-link):active {
 }
 h1, .h1 {
   font-family: "Bebas Neue", cursive;
-  transform: rotate(-12deg);
-  /* Legacy vendor prefixes that you probably don't need... */
-  /* Safari */
-  --webkit-transform: rotate(-12deg);
-  /* Firefox */
-  -moz-transform: rotate(-12deg);
-  /* IE */
-  -ms-transform: rotate(-12deg);
-  /* Opera */
-  -o-transform: rotate(-12deg);
   text-decoration: underline;
   margin-top: 100px;
   margin-bottom: 15px;
@@ -11318,22 +11308,26 @@ h1, .h1 {
 
 h2, .h2 {
   font-family: "Bebas Neue", cursive;
-  transform: rotate(-12deg);
-  /* Legacy vendor prefixes that you probably don't need... */
-  /* Safari */
-  --webkit-transform: rotate(-12deg);
-  /* Firefox */
-  -moz-transform: rotate(-12deg);
-  /* IE */
-  -ms-transform: rotate(-12deg);
-  /* Opera */
-  -o-transform: rotate(-12deg);
   font-size: calc(100% + 5vw);
   margin-top: 0px;
   margin-bottom: 100px;
   text-shadow: 2px 1px #AAA;
 }
 
+@media (min-width: 768px) {
+  h1, .h1, h2, .h2 {
+    transform: rotate(-12deg);
+    /* Legacy vendor prefixes that you probably don't need... */
+    /* Safari */
+    --webkit-transform: rotate(-12deg);
+    /* Firefox */
+    -moz-transform: rotate(-12deg);
+    /* IE */
+    -ms-transform: rotate(-12deg);
+    /* Opera */
+    -o-transform: rotate(-12deg);
+  }
+}
 .landing-page {
   display: flex;
   flex-direction: column;
