@@ -1,3 +1,16 @@
+document.addEventListener('orientationchange', () => {
+    document.documentElement.style.height = `initial`;
+    setTimeout(() => {
+      document.documentElement.style.height = `100%`;
+        setTimeout(() => {
+          // this line prevents the content
+          // from hiding behind the address bar
+          window.scrollTo(0, 1);
+        }, 500);
+    }, 500);
+  });
+
+
 $(function($){
   
     //Find first parent of an element with class '.row'
@@ -162,18 +175,17 @@ $(function($){
 
         generateAtlas()
         drawStars(ctx)
-        speedStars(ctxSp)
-        $( window ).scroll(function() {
-            canvasSpeedJQ.css( "display", "block" ).fadeOut( 2000, function() {
-                
-                speedStars(ctxSp)
-              } );
-            generateAtlas()
-            drawStars(ctx)
-          });
-
+        if(window.innerWidth>700) {
+           speedStars(ctxSp)
+            $( window ).scroll(function() {
+                canvasSpeedJQ.css( "display", "block" ).fadeOut( 2000, function() {
+                    speedStars(ctxSp)
+                } );
+                generateAtlas()
+                drawStars(ctx)
+            }); 
+        }
     }
-
 })
 
 
