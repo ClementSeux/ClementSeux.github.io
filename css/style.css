@@ -12437,18 +12437,9 @@ h2, .h2 {
 }
 
 .img-3:focus, .img-3:hover {
-  z-index: 999;
-  -webkit-filter: none;
-          filter: none;
-  opacity: 1;
-  -webkit-transform: scale(1.1);
-          transform: scale(1.1);
-  -webkit-transition: -webkit-transform 2s ease-out;
-  transition: -webkit-transform 2s ease-out;
-  transition: transform 2s ease-out;
-  transition: transform 2s ease-out, -webkit-transform 2s ease-out;
-  -webkit-filter: brightness(110%);
-          filter: brightness(110%);
+  background-image: url("../assets/arcanicFantasy.gif");
+  -webkit-filter: brightness(120%);
+          filter: brightness(120%);
 }
 
 .img-4 {
