@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Three.js</title>
+    <style>
+        body {
+            margin: 0;
+        }
+
+        canvas {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+<script type="module">
+  import * as THREE from 'https://unpkg.com/three@0.141.0/build/three.module.js'
+	THREE ? console.log('three ok') : console.log('three nok')
+	import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.121.1/examples/jsm/controls/OrbitControls.js'
+	 console.log('OrbitControls ok')
+	function getRandomInt(max) {
+		return Math.floor(Math.random() * max);
+	}
+
+    // Affichage de la forme
+    let colors = [0xFFFF99, 0xFF99FF, 0x99FFFF, 0xffbd99, 0xff9999, 0xc4ff99, 0x99e0ff, 0xad99ff];
+	let blocksModels = [
+		[[0,0],[0,1],[1,1],[0,2]], //T
+		[[0,0],[1,0],[0,1],[0,2]], //L
+		[[0,0],[1,0],[1,1],[1,2]], //reverse L
+		[[0,0],[0,1],[1,1],[1,2]], //Z
+		[[1,0],[1,1],[0,1],[0,2]], //reverse Z
+		[[0,0],[0,1],[0,2],[0,3]], //I
+		[[0,0],[0,1],[1,0],[1,1]]  //O
+	]
+  let fallSpeed = 0.02;
+	let spawnTimer = 8
+	let high = 10
+  let cameraZPosition = 15;
+	let clock = new THREE.Clock()
+	let time = 0
+	let delta = 0
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    camera.position.z = cameraZPosition;
+
+	const renderer = new THREE.WebGLRenderer();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.body.appendChild(renderer.domElement);
+	renderer.render(scene, camera)
+
+	const controls = new OrbitControls( camera, renderer.domElement );
+
+    
+	let light = new THREE.PointLight( 0xFFFFFF, 1.5, 1000 );
+	light.position.set(0, 20, 30);
+	scene.add(light);
+	let light2 = new THREE.PointLight( 0xFFFFFF, 1.5, 1000 );
+	light2.position.set(0, 20, -30);
+	scene.add(light2);
+
+	const blocks = []
+
+	function addBlock() {
+		let block = []
+		const rdm = getRandomInt(7)
+		let modelBlock = blocksModels[rdm]
+		let col = getRandomInt(5)
+		let color = colors[rdm]
+		for (let i = 0; i < 4; i++){
+			block.push(addCube(modelBlock[i], col, color))
+		}
+		blocks.push(block)
+	}
+
+	
+	function addCube(coord, formeCol, color) {
+		const geometry = new THREE.BoxGeometry(1,1,1,1,1,1);
+		const material = new THREE.MeshBasicMaterial({color: color , wireframe : true});
+		const forme = new THREE.Mesh(geometry, material);
+		scene.add(forme)
+		forme.position.set(
+			formeCol - 2.5 + coord[0],
+			high + coord[1],
+			0
+		)
+		forme.col = formeCol + coord[0]
+		
+		return forme
+	}
+
+	let formes = []
+	function addCubeR() {
+		const formeCol = getRandomInt(6)
+		const geometry = new THREE.BoxGeometry(1,1,1,1,1,1);
+		const material = new THREE.MeshBasicMaterial({color: colors[getRandomInt(colors.length)] , wireframe : true});
+		const forme = new THREE.Mesh(geometry, material);
+		scene.add(forme)
+		forme.position.set(
+			formeCol - 2.5,
+			high,
+			0
+		)
+		forme.col = formeCol
+		formes.push(forme)
+	}
+
+	function cmptCol(array, i, columns){
+		const forme = array[i]
+		forme.position.y <= -6 + columns[forme.col] ? columns[forme.col] += 1 : false
+	}
+
+	function deleteCube(array, i, columns){
+		const forme = array[i]
+		if(forme.position.y <= -5.9){
+						scene.remove(forme)
+						array.splice(i, 1)
+					}
+	}
+
+	function fall(array, i, columns){
+		const forme = array[i]
+		forme.position.set(
+				forme.position.x, 
+				forme.position.y <= -6 + columns[forme.col] ? forme.position.y  : forme.position.y - fallSpeed,
+				forme.position.z)
+	}
+
+	function blockFall(blocks, j, columns){
+		const block = blocks[j]
+		let down = true
+		for (let i = 0; i<4; i++){
+			block[i].position.y <= -6 + columns[block[i].col] ? down = false  : false
+		}
+		if(down){
+			runThrough(block, columns, fall)
+		}
+	}
+
+	function blockFallz(blocks, j, columns){
+		const block = blocks[j]
+		let down = true
+		for (let i = 0; i<4; i++){
+			const col = block[i].col
+			let lineUnder = Math.floor(block[i].position.y + 5.9)
+			lineUnder < 0 ? lineUnder = 0 : false
+			columns[col][lineUnder] === 1 ? down = false  : false
+		}
+		if(down){
+			runThrough(block, columns, fall)
+		}
+	}
+
+	function runThrough(array, columns, callback){
+		for (let i = 0; i < array.length; i++){
+			callback(array, i, columns)
+		}
+	}
+
+	function runThroughBackward(array, columns, callback){
+		for (let i = array.length - 1; i >= 0; i--){
+			callback(array, i, columns)
+		}
+	}
+
+
+
+	function animate(){
+		//spawn cubes
+		delta = clock.getDelta();
+		time += delta
+		if (time > spawnTimer){
+			time = 0
+			addBlock()
+		}
+
+		//compte les cubes sur chaque colonne
+		//const columns = [0, 0, 0, 0, 0, 0]
+		const columns = [
+			[0,0,0,0,0,0,0,0,0,0],
+			[0,0,0,0,0,0,0,0,0,0],
+			[0,0,0,0,0,0,0,0,0,0],
+			[0,0,0,0,0,0,0,0,0,0],
+			[0,0,0,0,0,0,0,0,0,0],
+			[0,0,0,0,0,0,0,0,0,0]
+		]
+		for(let i = 0; i < blocks.length; i++){
+			runThrough(blocks[i], columns, cmptCol)
+		}
+		console.log(columns)
+		//une ligne ? on supprime les cube/les blocks finies
+		//if (Math.min(...columns) >= 1){ 
+		//	console.log('I am deleting some of this')
+		//	console.log(formes)
+		//	runThroughBackward(formes, columns, deleteCube)
+		//	console.log('I am done')
+		//}
+				
+		runThrough(blocks, columns, blockFallz)
+				
+		controls.update()
+		renderer.render(scene, camera)
+		requestAnimationFrame(animate)
+	}
+
+	document.onkeydown = function(e) {time > fallSpeed * 50 ? (addBlock(), time = 0) : false}
+	addBlock()
+  animate()
+</script>
+</body>
+</html>
