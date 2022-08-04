@@ -1,0 +1,207 @@
+@import url('https://fonts.googleapis.com/css2?family=Lobster+Two:ital@1&display=swap');
+@font-face {
+  font-family:  "Cormorant";
+  src:  url(../fonts/CormorantUnicase-Regular.ttf) format("truetype");
+  font-stretch: wider;
+}
+@font-face {
+  font-family:  "Cormorant";
+  src:  url(../fonts/CormorantUnicase-Regular.ttf) format("truetype");
+  font-stretch: wider;
+}
+:root {
+  --animation-time:  3s;
+  --order-of-draft: 0;
+}
+
+body {
+	background: url('../img/background.jpeg') no-repeat fixed;
+  background-size: cover;
+  background-position: center;
+	color: white;
+  margin: 3%;
+  
+}
+
+
+
+#accueil {
+  position:  relative;
+	display: flex;
+	flex-direction: column;	
+	align-items: center;
+	
+}
+
+
+.header {
+  display: flex;
+  justify-content: space-evenly;
+
+}
+
+
+
+#barre-outils {
+  width: 400px;
+  z-index: 999;
+}
+
+button {
+  margin: 5px;
+  padding: 5px 8px 5px 8px;
+  border-radius: 4px;
+  background-color: #DDDDDDAA;
+}
+
+button:
+
+a {
+  color: #33333ACC;
+  text-decoration: none;    
+}
+
+a:link {
+  text-decoration:none;
+  color: #33333ACC;
+}
+
+a:visited { 
+  text-decoration: none; 
+  color: #33333ACC; 
+}
+
+h1 {
+  font-family: Cormorant;
+  padding: 2%;
+  margin: 0;
+  width: 400px;
+}
+
+
+#red-card {
+	color: red;
+}
+
+#black-card {
+	color: black;
+}
+
+.bolder {
+	font-weight: 450px;
+}
+
+div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+
+}
+
+.game-board {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 5px 5px 500px 5px;
+  margin: 0;
+}
+
+.container {
+  position: relative;
+  margin: 6px;
+  width: 100px;
+  height: 160px;
+  perspective: 1000px;
+}
+
+.card {
+  transition: transform 2s;
+  transform-style: preserve-3d;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+}
+
+.front, .back {
+  position: absolute;  
+  backface-visibility: hidden;
+  background-size: 200px;
+  border-radius: 12px;
+}
+
+.front {
+    background: url("../img/1/back.jpg");
+    background-size: 100px 160px;
+    background-repeat: no-repeat;
+    transform: rotateY(0deg);
+}
+
+.front:hover {
+  bottom: 2px;
+  left: 2px;
+  box-shadow: -10px 10px 20px  #000;
+}
+
+.back {
+  background: url("../img/1/0.jpg");
+  background-size: 100px 160px;
+  transform: rotateY(180deg);
+}
+
+.back::selection {
+  bottom: 2px;
+  right: 2px;
+  box-shadow: -10px 10px 20px  #000;
+  transform: scale(2, 2);
+}
+
+.animated {
+  animation: melange var(--animation-time);
+  animation-fill-mode: backwards;
+  animation-delay: 0.5s;
+}
+
+@keyframes melange {
+  from {
+    transform: rotateY(180deg);
+  }
+  to {
+    transform: rotateY(0deg);
+  }
+}
+
+.draft_animation {
+  animation: draft 3s;
+  animation-fill-mode: forwards;
+  animation-delay: 0.70s;
+}
+
+@keyframes draft {
+  from {
+    z-index: 900;
+  }
+  30%{
+    opacity: 0;
+    transform: translateY(90px);
+  }
+  55%{
+    transform: translateY(-90px);
+    z-index: 900;
+    position: fixed;
+    bottom: 300px;
+    opacity: 1;
+  }
+  80% {
+    z-index: 900;
+    position: fixed;
+    bottom: 300px;
+    opacity: 1;
+  }
+  to {
+    z-index: 900;
+    position: fixed;
+    bottom: 300px;
+    opacity: 1;
+  }
+}
