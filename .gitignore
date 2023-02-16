@@ -3,3 +3,4 @@ node_modules/
 css/
 !css/style.css
 !draft/css/style.css
+!wikimon/*/css/
